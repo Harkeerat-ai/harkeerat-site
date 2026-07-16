@@ -34,16 +34,18 @@ export default function CaseStudyLayout({ content }: CaseStudyLayoutProps) {
         </Link>
 
         {content.heroVideoUrl ? (
-          <video
-            src={content.heroVideoUrl}
-            controls
-            muted
-            loop
-            playsInline
-            className="aspect-[21/9] w-full rounded-xl bg-bg-secondary border border-border-subtle mb-8 md:mb-12 object-cover"
-          />
+          <div className="aspect-video w-full rounded-xl bg-black border border-border-subtle mb-8 md:mb-12 overflow-hidden flex items-center justify-center">
+            <video
+              src={content.heroVideoUrl}
+              controls
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-contain max-h-[70vh]"
+            />
+          </div>
         ) : (
-          <div className="aspect-[21/9] rounded-xl bg-bg-secondary border border-border-subtle mb-8 md:mb-12" />
+          <div className="aspect-video rounded-xl bg-bg-secondary border border-border-subtle mb-8 md:mb-12" />
         )}
 
         <h1 className="font-display text-heading-1 md:text-display-2 text-text-primary mb-4">
