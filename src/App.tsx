@@ -1,5 +1,5 @@
-import { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ChatProvider } from "./components/ai-chat/ChatContext";
 import MeetMyAI from "./components/ai-chat/MeetMyAI";
 import HomePage from "./pages/HomePage";
@@ -17,6 +17,12 @@ function CaseStudyPage({ children }: { children: React.ReactNode }) {
   );
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-bg-primary">
@@ -31,6 +37,7 @@ export default function App() {
   return (
     <ChatProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <main className="bg-bg-primary min-h-screen">
           <Suspense fallback={<PageLoader />}>
             <Routes>
