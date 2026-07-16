@@ -3,54 +3,53 @@ import type { CaseStudyContent } from "../components/case-studies/CaseStudyLayou
 
 const content: CaseStudyContent = {
   slug: "pong-ai",
-  title: "Pong-Playing Vision System",
+  title: "OLED Pong Game (v2)",
   summary:
-    "A computer-vision pipeline that tracks a physical Pong ball in real time and drives paddle actuators — no game API, just a camera, OpenCV, and a PID loop.",
+    "A full-featured Pong game on a 128×64 SH1106 OLED powered by an STM32 — with PvC and PvP modes, live score HUD, angle deflection physics, and a CPU opponent that tracks the ball at 65% of human speed.",
   problem:
-    "Most 'AI plays Pong' demos cheat by reading game memory or screen pixels from an emulator. I wanted a system that works on a real, physical setup — detecting a ball with a camera and controlling actual paddle motors with sub-100ms latency.",
+    "Most embedded Pong implementations use blocking delays, lack proper state machines, and have predictable AI. I wanted a polished, responsive game with smooth frame pacing, dynamic rally physics, and a fair but challenging CPU opponent — all on a microcontroller with limited RAM.",
   objective:
-    "Build an end-to-end perception-to-action pipeline achieving ≥25 FPS tracking, <80ms end-to-end latency from frame capture to motor command, and reliable ball detection under varying ambient light.",
-  research: `Explored color-based segmentation vs. Hough circle detection vs. background subtraction. Color thresholding in HSV space won for v1 — the ball was a distinct orange and the table background was controlled.
+    "Build a complete two-player Pong game on embedded hardware with a clean menu system, real-time score tracking, angle-based paddle deflection, progressive ball speed-up, and an AI opponent that plays well enough to be fun.",
+  research: `Evaluated display options — SSD1306 vs SH1106. Chose SH1106 for its 128×64 resolution and I2C simplicity. The Adafruit GFX library provided all drawing primitives without writing a custom framebuffer.
 
-Pipeline architecture:
-• Capture thread (OpenCV VideoCapture, 640×480 @ 60 FPS attempt)
-• Detection thread (HSV mask → contour analysis → centroid)
-• Prediction step (constant-velocity Kalman filter for occlusion gaps)
-• Control thread (PID on paddle Y position, mapped to servo angle)
-
-Chose a Raspberry Pi 4 with a USB webcam for prototyping; latency budget analysis showed the Pi could handle the pipeline at ~30 FPS with optimized NumPy operations.`,
+Key design decisions:
+• millis()-based frame pacing (8 ms ≈ 125 FPS) instead of blocking delay() — keeps frame rate consistent even when I2C transfer times vary.
+• Velocity-direction gating on paddle collision prevents the "sticky paddle" bug from v1 where high-speed balls could reflect multiple times in one frame.
+• Angle deflection maps the ball's contact point on the paddle face to a rebound angle — edge hits produce steep angles, centre hits produce flat trajectories, adding skill depth.
+• Ball speed increases 5% per paddle hit, capped at MAX_BALL_SPEED, creating natural rally tension.
+• CPU AI tracks the ball centre at 65% of player speed — a handicap that gives human players a fair challenge.`,
   hardware:
-    "Raspberry Pi 4 (4 GB), USB webcam (720p @ 60 FPS), 2× micro servos for paddle actuation, 3D-printed paddle mounts, physical Pong table with controlled lighting.",
+    "STM32 microcontroller, SH1106 128×64 OLED display (I2C 0x3C), 2× analog joysticks (P1 on PA4/PA5, P2 on PA2/PA3), select button (PA14, INPUT_PULLUP).",
   software:
-    "Python 3.11 — OpenCV for capture and detection, NumPy for vectorized math, a threaded pipeline with lock-free queues between stages. PID controller with anti-windup. Optional Pygame overlay for debug visualization.",
-  ai: "No neural network in v1 — classical CV with a Kalman filter for prediction. Evaluated a tiny YOLO-nano model for ball detection but latency was 3× worse on Pi 4 without an accelerator. ML reserved for v2 with a Coral TPU.",
+    "C++ (Arduino framework) — Adafruit_SH1106 for OLED control, Adafruit_GFX for graphics, Wire for I2C. Custom Joystick, Button, Paddle, and Ball classes with a three-state machine (Menu → Game → Win). Debounced button with arm-then-detect to prevent boot-time false triggers.",
+  ai: "No neural networks — the CPU opponent uses a proportional tracking algorithm that moves the paddle toward the ball's vertical centre at 65% of human player speed. The challenge comes from progressive ball acceleration and angle-based deflection that makes each rally play differently.",
   challenges: [
     {
-      challenge: "Motion blur at high ball speeds caused missed detections.",
+      challenge: "The 'sticky paddle' bug — at high ball speeds, the ball could reflect between paddle and wall multiple times in a single frame.",
       solution:
-        "Increased shutter speed via webcam exposure settings and added Kalman prediction to bridge 2–3 frame gaps during fast crosses.",
+        "Added velocity-direction gating: the left paddle only tests collision when the ball moves left (vx < 0), and the right paddle only when it moves right (vx > 0). A one-line fix that eliminated an entire class of bugs.",
     },
     {
-      challenge: "Latency spikes from Python GIL contention between threads.",
+      challenge: "Boot-time false triggers on the select button skipped the menu immediately after power-on.",
       solution:
-        "Moved capture and detection to separate processes via multiprocessing; only the lightweight PID loop shared the GIL with the main process.",
+        "Implemented an arm-then-detect pattern — the button driver waits until it observes a HIGH state at least once before registering any press, preventing phantom triggers at boot.",
     },
     {
-      challenge: "Ambient light changes broke HSV thresholds mid-session.",
+      challenge: "Score text was overwritten by the ball and paddles during gameplay.",
       solution:
-        "Added an auto-calibration step on startup that samples the ball color from a known position and adjusts HSV bounds dynamically.",
+        "Reserved the top 9 pixel rows (HUD_H) exclusively for the score display with a solid separator line. All game objects are constrained to y ≥ FIELD_TOP, protecting the HUD from being overwritten.",
     },
   ],
   results: [
-    { value: "28", label: "FPS average" },
-    { value: "72ms", label: "E2E latency" },
-    { value: "94%", label: "Detection rate" },
-    { value: "8", label: "Weeks to build" },
+    { value: "125", label: "FPS target" },
+    { value: "2", label: "Game modes" },
+    { value: "10", label: "Points to win" },
+    { value: "2", label: "Weeks to build" },
   ],
   lessons:
-    "Latency budgets must be measured end-to-end, not per-stage. My detection was fast but queue depth between threads added 40ms I didn't account for until I timestamped every handoff.",
+    "State machines are underrated in embedded projects. Defining MENU, GAME, and WIN states with explicit transitions made the code easy to reason about and debug. Velocity gating showed me that thinking about edge cases at the maths level saves hours of empirical debugging.",
   future:
-    "Deploy YOLO-nano on a Coral USB accelerator for robust detection under uncontrolled lighting, add reinforcement learning for predictive paddle positioning, and port the control loop to C++ for sub-20ms latency.",
+    "Add a high-score table stored in EEPROM, implement difficulty levels by adjusting the AI speed handicap, add sound effects via a piezo buzzer, and build a version with SPI OLED for higher frame rates.",
 };
 
 export default function CaseStudyPong() {

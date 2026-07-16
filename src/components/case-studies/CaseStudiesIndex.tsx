@@ -12,9 +12,9 @@ const FEATURED = [
   },
   {
     slug: "pong-ai",
-    title: "Pong-Playing Vision System",
-    problem: "Real-time ball tracking and paddle control using computer vision — no game API required.",
-    tags: ["cv", "real-time", "ml"],
+    title: "OLED Pong Game (v2)",
+    problem: "Full-featured embedded Pong on an STM32 with 125 FPS frame pacing, angle-deflection physics, and a CPU opponent.",
+    tags: ["embedded", "c++", "game"],
     route: "/case-studies/pong-ai",
   },
 
