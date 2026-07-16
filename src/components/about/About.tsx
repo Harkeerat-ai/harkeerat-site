@@ -172,7 +172,6 @@ export default function About() {
               <StatCounter
                 key={stat.label}
                 value={stat.value}
-                suffix={stat.suffix}
                 label={stat.label}
               />
             ))}
