@@ -5,12 +5,17 @@ import { FOCUS_RING } from "../../lib/constants";
 const LINKS = [
   {
     label: "Email",
-    href: "mailto:harkeerat@example.com", // TODO: replace with real email
+    href: "mailto:harkeeratbhasin69@gmail.com",
+    external: false,
+  },
+  {
+    label: "Phone",
+    href: "tel:+919820026430",
     external: false,
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/harkeerat-bhasin", // TODO: replace with real profile URL
+    href: "https://www.linkedin.com/in/harkeerat-bhasin-715894331",
     external: true,
   },
   {
@@ -18,7 +23,11 @@ const LINKS = [
     href: "https://github.com/Harkeerat-ai",
     external: true,
   },
-
+  {
+    label: "Instagram",
+    href: "https://instagram.com/h.k.bhasin",
+    external: true,
+  },
 ];
 
 export default function Contact() {

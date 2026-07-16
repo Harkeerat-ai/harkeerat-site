@@ -37,10 +37,10 @@ const VALUES = [
 ];
 
 const STATS = [
-  { value: 12, label: "Projects" },
-  { value: 6, label: "Competitions" },
-  { value: 8, label: "Certifications" },
-  { value: 4, suffix: "+", label: "Years of learning" },
+  { value: 14, label: "Projects" },
+  { value: 2, label: "Competitions" },
+  { value: 10, label: "Certifications" },
+  { value: 7, label: "Years of learning" },
 ];
 
 export default function About() {
@@ -86,10 +86,10 @@ export default function About() {
           <div className="flex flex-col gap-10">
             <ScrollReveal delay={0.1}>
               <p className="text-heading-1 font-display text-text-primary leading-tight">
-                {/* TODO: replace with your real mission statement */}
-                I build intelligent machines because the gap between what robots
-                can do and what the world needs them to do is the most exciting
-                engineering problem of our generation.
+                I build because I love creating things that work — from the
+                first line of code to the moment a robot actually moves. The
+                gap between what machines can do and what people need them to
+                do is the most exciting engineering problem I know.
               </p>
             </ScrollReveal>
 
@@ -98,27 +98,29 @@ export default function About() {
                 <h3 className="text-caption uppercase tracking-wide text-accent-electric mb-4">
                   Bio
                 </h3>
-                {/* TODO: replace all lorem ipsum below with your real About Me copy */}
                 <div className="space-y-4 text-body-lg text-text-secondary">
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Harkeerat Bhasin is a second-year Computer Science student
-                    focused on AI-driven robotics, embedded systems, and machine
-                    intelligence. Nullam in dui mauris. Vivamus hendrerit arcu
-                    sed erat molestie vehicula.
+                    who builds at the intersection of robotics, embedded
+                    systems, and artificial intelligence. What started with
+                    tinkering on microcontrollers has grown into projects
+                    spanning robotic manipulation, real-time game physics, and
+                    full-stack AI systems.
                   </p>
                   <p>
-                    Sed auctor neque eu tellus rhoncus ut eleifend nibh
-                    porttitor. Ut in nulla enim. Phasellus molestie magna non
-                    est bibendum non venenatis nisl tempor. Suspendisse dictum
-                    feugiat nisl ut dapibus.
+                    Outside the lab you will find him on the basketball court,
+                    coding late into the night with a coffee in hand, or
+                    volunteering in community service initiatives. He believes
+                    the best engineering happens when diverse interests
+                    collide — whether that is applying control theory from
+                    robotics to game physics, or bringing the same iteration
+                    mindset from sports practice to software development.
                   </p>
                   <p>
-                    Mauris tincidunt tincidunt erat, at sodales ligula
-                    scelerisque sit amet. Donec in massa velit. Cras vel
-                    vestibulum ante. Integer accumsan, nisl nec tincidunt
-                    aliquam, nisi leo auctor tortor, sit amet aliquet nisi
-                    magna id erat.
+                    Driven by curiosity and powered by caffeine, he treats
+                    every project as a laboratory where technology meets
+                    purpose. His goal: build intelligent machines that solve
+                    real problems.
                   </p>
                 </div>
               </div>
@@ -153,13 +155,11 @@ export default function About() {
                 <h3 className="text-caption uppercase tracking-wide text-accent-electric mb-3">
                   Engineering philosophy
                 </h3>
-                {/* TODO: replace with your real philosophy text */}
                 <p className="text-body-lg text-text-secondary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. As a
-                  CS student I treat every project as a laboratory — blending
-                  embedded systems, computer vision, and AI to create robots that
-                  sense, decide, and act with purpose. Sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua.
+                  Every project is a laboratory — blend hardware, software, and
+                  intelligence into one integrated loop. Ship fast, measure
+                  honestly, and iterate relentlessly. Progress always beats
+                  perfection.
                 </p>
               </div>
             </ScrollReveal>
