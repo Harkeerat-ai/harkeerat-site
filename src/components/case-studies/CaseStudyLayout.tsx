@@ -15,6 +15,7 @@ export type CaseStudyContent = {
   results: { value: string; label: string }[];
   lessons: string;
   future: string;
+  heroVideoUrl?: string;
 };
 
 type CaseStudyLayoutProps = {
@@ -32,9 +33,18 @@ export default function CaseStudyLayout({ content }: CaseStudyLayoutProps) {
           ← Back to case studies
         </Link>
 
-        {/* Hero visual */}
-        {/* TODO: replace with real exploded diagram / project hero image */}
-        <div className="aspect-[21/9] rounded-xl bg-bg-secondary border border-border-subtle mb-8 md:mb-12" />
+        {content.heroVideoUrl ? (
+          <video
+            src={content.heroVideoUrl}
+            controls
+            muted
+            loop
+            playsInline
+            className="aspect-[21/9] w-full rounded-xl bg-bg-secondary border border-border-subtle mb-8 md:mb-12 object-cover"
+          />
+        ) : (
+          <div className="aspect-[21/9] rounded-xl bg-bg-secondary border border-border-subtle mb-8 md:mb-12" />
+        )}
 
         <h1 className="font-display text-heading-1 md:text-display-2 text-text-primary mb-4">
           {content.title}

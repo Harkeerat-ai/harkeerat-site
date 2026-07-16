@@ -4,6 +4,7 @@ import type { CaseStudyContent } from "../components/case-studies/CaseStudyLayou
 const content: CaseStudyContent = {
   slug: "pong-ai",
   title: "OLED Pong Game (v2)",
+  heroVideoUrl: "/videos/pong-demo.mp4",
   summary:
     "A full-featured Pong game on a 128×64 SH1106 OLED powered by an STM32 — with PvC and PvP modes, live score HUD, angle deflection physics, and a CPU opponent that tracks the ball at 65% of human speed.",
   problem:

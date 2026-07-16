@@ -4,6 +4,7 @@ import type { CaseStudyContent } from "../components/case-studies/CaseStudyLayou
 const content: CaseStudyContent = {
   slug: "robotic-arm",
   title: "Servo-Driven Robotic Arm",
+  heroVideoUrl: "/videos/arm-demo.mp4",
   summary:
     "A 4-DOF robotic manipulator with inverse kinematics, serial servo control, and a web-based teleoperation interface — built on ESP32 firmware with a Python calibration pipeline.",
   problem:

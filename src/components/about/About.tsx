@@ -57,29 +57,13 @@ export default function About() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* TODO: replace with real desaturated/graphite-toned portrait photo */}
           <ScrollReveal>
-            <div
-              className="aspect-[4/5] w-full max-w-md mx-auto lg:mx-0 rounded-xl bg-bg-secondary border border-border-subtle flex flex-col items-center justify-center gap-3 p-8"
-              aria-label="Portrait placeholder — replace with your photo"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.25"
-                className="w-12 h-12 text-text-secondary"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="8" r="3.5" />
-                <path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5" strokeLinecap="round" />
-              </svg>
-              <p className="text-caption uppercase tracking-wide text-text-secondary text-center">
-                Your photo here
-              </p>
-              <p className="text-caption normal-case tracking-normal text-text-secondary/70 text-center max-w-[12rem]">
-                Replace this block with a portrait image
-              </p>
+            <div className="aspect-[4/5] w-full max-w-md mx-auto lg:mx-0 rounded-xl bg-bg-secondary border border-border-subtle overflow-hidden">
+              <img
+                src="/portrait.jpeg"
+                alt="Portrait of Harkeerat Bhasin"
+                className="w-full h-full object-cover"
+              />
             </div>
           </ScrollReveal>
 
